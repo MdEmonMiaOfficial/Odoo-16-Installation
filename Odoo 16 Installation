@@ -1,0 +1,126 @@
+Odoo 16 Installation
+
+
+Update & Upgrade:
+
+# sudo apt-get update
+# sudo apt-get -y upgrade
+# sudo apt --fix-broken install (<= might be needed if # sudo apt-get -y upgrade does not work, else not needed. )
+
+Python & Ubuntu Dependencies:
+
+Ubuntu dependencies:-
+
+# sudo apt install python3-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libtiff5-dev libjpeg8-dev libopenjp2-7-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev libxcb1-dev libpq-dev git python3-pip build-essential wget python3-venv python3-wheel libxslt-dev libzip-dev python3-setuptools node-less python3-psycopg2 
+
+Give access to opt/odoo folder:
+
+# cd /opt
+# sudo mkdir odoo
+# sudo chmod 777 -R /opt/odoo/
+# cd odoo
+# git clone --depth 1 --branch 16.0 https://github.com/odoo/odoo.git 
+# rename odoo folder to ‘odoo16’
+
+Python dependencies:-(skip if you want to run from venv)
+
+# pip3 install -r /opt/odoo/odoo15/requirements.txt
+
+Python Web Dependencies:
+
+# sudo apt-get install -y npm
+# sudo ln -s /usr/bin/nodejs /usr/bin/node
+# sudo npm install -g less less-plugin-clean-css
+# sudo apt-get install node-less
+# sudo python3 -m pip install libsass
+
+Ubuntu Libraries:
+
+# sudo apt-get install vim
+
+Install Postgresql:
+
+# sudo apt-get install software-properties-common
+# sudo apt-get install python3-software-properties
+# wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+# sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -sc)-pgdg main" > /etc/apt/sources.list.d/PostgreSQL.list'
+# sudo apt-get update
+# sudo apt-get install postgresql-13
+# sudo apt-get install postgresql-contrib
+
+Create Database user for Odoo:
+
+# sudo su postgres
+# cd
+# createuser -s odoo 
+# whoami    (to check ubuntu_user_name)
+# createuser -s ubuntu_user_name    (<= give pc user name. not ubuntu_user_name)
+# exit
+
+Create Odoo user and group:
+
+# sudo adduser --system --home=/opt/odoo --group odoo
+# cd /opt/odoo
+
+Install Gdata:
+
+# sudo wget https://pypi.python.org/packages/a8/70/bd554151443fe9e89d9a934a7891aaffc63b9cb5c7d608972919a002c03c/gdata-2.0.18.tar.gz
+
+# sudo tar zxvf gdata-2.0.18.tar.gz
+# sudo chown -R odoo: gdata-2.0.18
+# sudo -s
+# cd gdata-2.0.18/
+# python3 setup.py install (skip, or try with python 2)
+# exit
+# sudo chown -R odoo: odoo15
+
+Create Odoo Log file:
+
+# sudo mkdir /var/log/odoo
+# sudo chown -R odoo:root /var/log/odoo
+
+Install Wkhtmltopdf:
+
+# sudo wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.bionic_amd64.deb
+                                   	 
+# sudo dpkg -i wkhtmltox_0.12.6-1.bionic_amd64.deb
+# sudo apt-get install -f
+# sudo ln -s /usr/local/bin/wkhtmltopdf /usr/bin
+# sudo ln -s /usr/local/bin/wkhtmltoimage /usr/bin
+
+Run Odoo 15 using command:
+
+# cd
+# /opt/odoo/odoo16/./odoo-bin --addons-path=/opt/odoo/odoo16/addons,/opt/odoo/odoo16/custom --xmlrpc-port=8015 -d dbname -u modulename
+
+Go to : http://localhost:8015/web/database/selector
+
+
+For venv:
+
+Install venv:
+
+# sudo apt install python3.8-venv
+# python3.8 -m venv odoo15
+
+Activate deactivate:
+
+#  . odoo16/bin/activate
+# deactivate
+
+Update & Upgrade:
+
+# sudo apt-get update
+# sudo apt-get -y upgrade
+# sudo apt --fix-broken install (<= might be needed if # sudo apt-get -y upgrade does not work, else not needed. )
+
+Python & Ubuntu Dependencies:
+
+Ubuntu dependencies:-
+
+# sudo apt install python3-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libtiff5-dev libjpeg8-dev libopenjp2-7-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev libxcb1-dev libpq-dev git python3-pip build-essential wget python3-venv python3-wheel libxslt-dev libzip-dev python3-setuptools node-less python3-psycopg2 
+
+Python dependencies:-
+
+# pip3 install -r /opt/odoo/odoo16/requirements.txt
+# pip3 install ptvsd
